@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        path: ./
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -22,6 +24,8 @@ jobs:
 
     - name: Build project
       run: cargo build --verbose
+      working-directory: ./
 
     - name: Run tests
       run: cargo test
+      working-directory: ./
