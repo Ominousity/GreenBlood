@@ -24,16 +24,16 @@ jobs:
 
     - name: Build project Measurement
       run: cargo build --verbose
-      working-directory: ./measurement-service
+      working-directory: measurement-service
 
     - name: Run tests Measurement
       run: cargo test
-      working-directory: ./measurement-service
+      working-directory: measurement-service
 
     - name: Build project Paitent
       run: cargo build --verbose
-      working-directory: ./paitent-service
+      working-directory: paitent-service
 
     - name: Run tests Paitent
       run: cargo test
-      working-directory: ./paitent-service
+      working-directory: paitent-service
