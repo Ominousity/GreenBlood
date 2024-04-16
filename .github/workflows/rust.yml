@@ -14,11 +14,26 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        path: ./
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
 
-    - name: Run tests
+    - name: Build project Measurement
+      run: cargo build --verbose
+      working-directory: measurement-service
+
+    - name: Run tests Measurement
       run: cargo test
+      working-directory: measurement-service
+
+    - name: Build project Paitent
+      run: cargo build --verbose
+      working-directory: paitent-service
+
+    - name: Run tests Paitent
+      run: cargo test
+      working-directory: paitent-service
