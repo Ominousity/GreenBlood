@@ -22,10 +22,18 @@ jobs:
       with:
         toolchain: stable
 
-    - name: Build project
+    - name: Build project Measurement
       run: cargo build --verbose
-      working-directory: ./
+      working-directory: ./measurement-service
 
-    - name: Run tests
+    - name: Run tests Measurement
       run: cargo test
-      working-directory: ./
+      working-directory: ./measurement-service
+
+    - name: Build project Paitent
+      run: cargo build --verbose
+      working-directory: ./paitent-service
+
+    - name: Run tests Paitent
+      run: cargo test
+      working-directory: ./paitent-service
