@@ -7,3 +7,10 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.5"
+opentelemetry = "0.22.0"
+tokio = { version = "1.37.0", features = ["full"] }
+mini-redis = "0.4"
+chrono = { version = "0.4.1", features = ["serde"]}
+utoipa = "4.2.0"
+utoipa-swagger-ui = {"6.0.0". features = ["axum"]}
+serde = "1.0"

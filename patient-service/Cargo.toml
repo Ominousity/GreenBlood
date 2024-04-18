@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.5"
+opentelemetry = "0.22.0"
