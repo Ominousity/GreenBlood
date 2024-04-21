@@ -1,4 +1,4 @@
-name: RustTest
+name: RunTests
 
 on:
   push:
@@ -14,26 +14,19 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
       with:
-        path: ./
+        dotnet-version: '8.0.x'
 
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
+    - name: Restore dependencies
+      run: dotnet restore
 
-    - name: Build project Measurement
-      run: cargo build --verbose
-      working-directory: measurement-service
+    - name: Build
+      run: dotnet build --configuration Release
 
-    - name: Run tests Measurement
-      run: cargo test
-      working-directory: measurement-service
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
 
-    - name: Build project Patient
-      run: cargo build --verbose
-      working-directory: patient-service
-
-    - name: Run tests Patient
-      run: cargo test
-      working-directory: patient-service
+    
