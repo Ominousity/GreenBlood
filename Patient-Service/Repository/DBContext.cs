@@ -14,6 +14,5 @@ public class DBContext : DbContext
     {
         modelBuilder.Entity<Patient>().HasKey(p => p.Id);
         modelBuilder.Entity<Patient>().HasMany(p => p.Measurements);
-        modelBuilder.Entity<Measurement>().HasKey(m => m.Id);
     }
 }
