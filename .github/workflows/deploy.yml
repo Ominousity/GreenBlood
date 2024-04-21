@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      ECR_REPO_URL: ${{ secrets.ECR_REPO_URL }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t amazonEC2 .
+
+    - name: Login to AWS ECR
+      run: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $ECR_REPO_URL
+
+    - name: Tag Docker image
+      run: docker tag amazonEC2:latest $ECR_REPO_URL/greenblod:latest
+
+    - name: Push Docker image to ECR
+      run: docker push $ECR_REPO_URL/greenblod:latest
+
+    - name: SSH into EC2 and deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: 35.180.225.108
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          docker pull $ECR_REPO_URL/greenblod:latest
+          docker stop your-container-name || true
+          docker rm your-container-name || true
+          docker run -d --name your-container-name -p 80:80 $ECR_REPO_URL/greenblod:latest
