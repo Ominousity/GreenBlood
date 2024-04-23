@@ -1,5 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Repository;
+using AutoMapper;
+using Domain;
+using Patient_Repo;
+using PatientService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+//add automapper
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.CreateMap<PatientBe, Patient>();
+    mc.CreateMap<Patient, PatientBe>();
+});
 
-var connectionString = builder.Configuration.GetConnectionString("SQLConnection");
-builder.Services.AddDbContext<DBContext>(options => 
-    options.UseSqlServer(connectionString));
+builder.Services.AddSingleton(mapperConfig.CreateMapper());
+
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
+builder.Services.AddDbContext<DBContext>();
 
 builder.Services.AddControllers();
 

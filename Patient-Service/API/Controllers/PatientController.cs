@@ -1,6 +1,6 @@
-﻿using Domain;
+﻿using PatientService;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Repository;
 
 namespace API;
 
@@ -9,20 +9,18 @@ namespace API;
 public class PatientController : ControllerBase
 {
 
-    private readonly IPatientRepository _patientRepository;
+    private readonly IPatientService _patientService;
 
-    public PatientController(IPatientRepository patientRepository)
+    public PatientController(IPatientService patientService)
     {
-        _patientRepository = patientRepository;
+        _patientService = patientService;
     }
-
-    
 
     [HttpGet]
     [Route("get/{ssn}")]
     public IActionResult GetPatient(int ssn)
     {
-        Patient patient = _patientRepository.GetPatient(ssn).Result;
+        Patient patient = _patientService.GetPatient(ssn).Result;
         return Ok(patient);
     }
 
@@ -30,15 +28,7 @@ public class PatientController : ControllerBase
     [Route("add")]
     public IActionResult AddPatient(Patient patient)
     {
-        _patientRepository.AddPatient(patient);
-        return Ok();
-    }
-
-    [HttpPut]
-    [Route("update")]
-    public IActionResult UpdatePatient(Patient patient)
-    {
-        _patientRepository.UpdatePatient(patient);
+        _patientService.AddPatient(patient);
         return Ok();
     }
 
@@ -46,15 +36,7 @@ public class PatientController : ControllerBase
     [Route("delete/{ssn}")]
     public IActionResult DeletePatient(int ssn)
     {
-        _patientRepository.DeletePatient(ssn);
-        return Ok();
-    }
-
-    [HttpPost]
-    [Route("rebuild")]
-    public IActionResult Rebuild()
-    {
-        _patientRepository.Rebuild();
+        _patientService.DeletePatient(ssn);
         return Ok();
     }
 }
