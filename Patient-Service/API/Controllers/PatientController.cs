@@ -1,4 +1,4 @@
-﻿using API.PatientService;
+﻿using PatientService;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 

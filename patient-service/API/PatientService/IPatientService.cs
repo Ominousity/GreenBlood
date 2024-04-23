@@ -1,6 +1,6 @@
 ﻿using Domain;
 
-namespace API.PatientService
+namespace PatientService
 {
     public interface IPatientService
     {

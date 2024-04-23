@@ -1,8 +1,7 @@
 ﻿using API;
-using Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.PatientRepository;
+namespace PatientRepository;
 
 public class DBContext : DbContext
 {

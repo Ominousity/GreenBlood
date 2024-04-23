@@ -1,12 +1,12 @@
 ﻿
-using API.PatientRepository;
+using PatientRepository;
 using AutoMapper;
 using Domain;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
+using API;
 
-namespace API.PatientService
+namespace PatientService
 {
     public class PatientService : IPatientService
     {

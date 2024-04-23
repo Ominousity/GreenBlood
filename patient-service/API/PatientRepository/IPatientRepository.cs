@@ -1,7 +1,6 @@
 ﻿using API;
-using Domain;
 
-namespace API.PatientRepository;
+namespace PatientRepository;
 
 public interface IPatientRepository
 {

@@ -1,9 +1,8 @@
 using API;
-using API.PatientRepository;
-using API.PatientService;
+using PatientRepository;
+using PatientService;
 using AutoMapper;
 using Domain;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +20,8 @@ var mapperConfig = new MapperConfiguration(mc =>
 
 builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
-builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository.PatientRepository>();
+builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
 builder.Services.AddDbContext<DBContext>();
 
 builder.Services.AddControllers();
