@@ -2,7 +2,7 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repository;
+namespace API.PatientRepository;
 
 public class DBContext : DbContext
 {

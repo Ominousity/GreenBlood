@@ -1,8 +1,8 @@
 ﻿
+using API.PatientRepository;
 using AutoMapper;
 using Domain;
 using Newtonsoft.Json;
-using Repository;
 using System.Net.Http;
 using System.Text;
 

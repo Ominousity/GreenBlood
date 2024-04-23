@@ -1,9 +1,9 @@
 using API;
+using API.PatientRepository;
 using API.PatientService;
 using AutoMapper;
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
