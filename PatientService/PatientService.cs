@@ -20,7 +20,7 @@ namespace PatientService
         {
             _mapper = mapper;
             _patientRepository = patientRepository;
-            _HttpClient = new HttpClient { BaseAddress = new Uri("http://Measurment/Measurment") };
+            _HttpClient = new HttpClient { BaseAddress = new Uri("http://measurement-service/Measurment") };
         }
         public void AddPatient(Patient patient)
         {
