@@ -21,6 +21,12 @@ jobs:
         dotnet-version: '8.0.x'
 
     # Measurement Service
+    # Measurement Service
+    - name: Restore dependencies for Measurement Service
+      run: |
+        cd Measurments_Service
+        dotnet restore
+        
     - name: Build and Test Measurement Service
       run: |
         cd Measurments_Service
@@ -28,6 +34,11 @@ jobs:
         dotnet test
     
     # Patient Service
+    - name: Restore dependencies for Patient Service
+      run: |
+        cd Patient-Service/API
+        dotnet restore
+        
     - name: Build and Test Patient Service
       run: |
         cd Patient-Service/API
