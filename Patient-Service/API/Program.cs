@@ -1,8 +1,7 @@
-using API;
-using PatientRepository;
-using PatientService;
 using AutoMapper;
 using Domain;
+using Patient_Repo;
+using PatientService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +19,7 @@ var mapperConfig = new MapperConfiguration(mc =>
 
 builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
-builder.Services.AddScoped<IPatientRepository, PatientRepository.PatientRepository>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
 builder.Services.AddDbContext<DBContext>();
 

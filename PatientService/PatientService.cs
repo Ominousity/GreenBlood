@@ -1,10 +1,13 @@
-﻿
-using PatientRepository;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain;
 using Newtonsoft.Json;
+using Patient_Repo;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Linq;
 using System.Text;
-using API;
+using System.Threading.Tasks;
 
 namespace PatientService
 {
@@ -19,7 +22,7 @@ namespace PatientService
             _patientRepository = patientRepository;
             _HttpClient = new HttpClient { BaseAddress = new Uri("http://Measurment/Measurment") };
         }
-        public void AddPatient(Patient patient) 
+        public void AddPatient(Patient patient)
         {
             // Map the Patient object to PatientBe object
             PatientBe patientBe = _mapper.Map<PatientBe>(patient);

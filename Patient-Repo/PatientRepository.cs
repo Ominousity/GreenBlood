@@ -1,6 +1,11 @@
-﻿using API;
+﻿using Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace PatientRepository
+namespace Patient_Repo
 {
     public class PatientRepository : IPatientRepository
     {
