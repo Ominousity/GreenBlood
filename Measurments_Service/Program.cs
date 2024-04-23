@@ -2,6 +2,7 @@ using AutoMapper;
 using Domain;
 using Measurments_Service.Be;
 using Measurments_Service.Repository;
+using Measurments_Service.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 //add services to scope
 builder.Services.AddScoped<IMeasurmentRepo, MeasurmentRepo>();
+builder.Services.AddScoped<IMeasurmentService, MeasurmentService>();
+builder.Services.AddDbContext<MeasurmentContext>();
+
 
 //AutoMapper
 var mapperConfig = new MapperConfiguration(mc =>
@@ -20,6 +24,8 @@ var mapperConfig = new MapperConfiguration(mc =>
     mc.CreateMap<MeasurmentBe, Measurement>();
     mc.CreateMap<Measurement, MeasurmentBe>();
 });
+
+builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
 var app = builder.Build();
 
@@ -41,6 +47,25 @@ using (var scope = app.Services.CreateScope())
     {  context.Database.Migrate(); }
 }
 
+var MeasurmentGroup = app.MapGroup("/Measurment");
+
+MeasurmentGroup.MapGet("/GetMeasurements/{SSN}", async (IMeasurmentService measurmentService, string SSN) =>
+{
+    return await Task.FromResult(measurmentService.GetMeasurements(SSN));
+});
+
+MeasurmentGroup.MapPost("/AddMeasurement/{SSN}", async (IMeasurmentService measurmentService, Measurement measurement, string SSN) =>
+{
+    measurmentService.AddMeasurement(measurement, SSN);
+    return Results.Created($"/Measurment/GetMeasurements/{SSN}", measurement);
+});
+
+MeasurmentGroup.MapPut("/UpdateMeasurement", async (IMeasurmentService measurmentService, Measurement measurement) =>
+{
+    measurmentService.UpdateMeasurement(measurement);
+    return Results.NoContent();
+});
+
 app.Run();
 
-var MeasurmentsApi = app.MapGroup("/MeasurmentsApi");
+

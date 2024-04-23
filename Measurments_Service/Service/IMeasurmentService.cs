@@ -6,7 +6,7 @@ namespace Measurments_Service.Service
     {
         List<Measurement> GetMeasurements(string SSn);
 
-        void AddMeasurement(Measurement measurement);
+        void AddMeasurement(Measurement measurement, string SSN);
 
         void UpdateMeasurement(Measurement measurement);
     }

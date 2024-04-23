@@ -15,7 +15,7 @@ namespace Measurments_Service.Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //TODO move connection string to appsettings.json
-            optionsBuilder.UseSqlServer("Server=calc-db;Database=calc;User Id=sa;Password=SuperSecret7!;Trusted_Connection=False;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=measurmentData;User ID=API;Password=SuperSecret7!;TrustServerCertificate=true;");
         }
     }
     }
