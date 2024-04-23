@@ -21,21 +21,15 @@ jobs:
         dotnet-version: '8.0.x'
 
     # Measurement Service
-    - name: Restore dependencies for Measurement Service
-      run: dotnet restore Measurements_Service
-
-    - name: Build Measurement Service
-      run: dotnet build --configuration Release Measurements_Service
-
-    - name: Test Measurement Service
-      run: dotnet test --no-restore --verbosity normal Measurements_Service
+    - name: Build and Test Measurement Service
+      run: |
+        cd Measurments_Service
+        dotnet build
+        dotnet test
     
     # Patient Service
-    - name: Restore dependencies for Patient Service
-      run: dotnet restore Patient-Service/API
-
-    - name: Build Patient Service
-      run: dotnet build --configuration Release Patient-Service/API
-
-    - name: Test Patient Service
-      run: dotnet test --no-restore --verbosity normal Patient-Service/API
+    - name: Build and Test Patient Service
+      run: |
+        cd Patient-Service/API
+        dotnet build
+        dotnet test
