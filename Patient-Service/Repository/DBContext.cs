@@ -9,6 +9,7 @@ public class DBContext : DbContext
     public DbSet<Measurement> Measurements { get; set; }
     public DBContext(DbContextOptions<DBContext> options) : base(options)
     {
+        
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
