@@ -4,6 +4,7 @@ using Domain;
 using Newtonsoft.Json;
 using Repository;
 using System.Net.Http;
+using System.Text;
 
 namespace API.PatientService
 {
@@ -18,11 +19,16 @@ namespace API.PatientService
             _patientRepository = patientRepository;
             _HttpClient = new HttpClient { BaseAddress = new Uri("http://Measurment/Measurment") };
         }
-        public void AddPatient(Patient patient)
+        public void AddPatient(Patient patient) 
         {
             // Map the Patient object to PatientBe object
             PatientBe patientBe = _mapper.Map<PatientBe>(patient);
             _patientRepository.AddPatient(patientBe);
+
+            if (patient.Measurements.Count != 0)
+            {
+                var response = _HttpClient.PostAsync($"/AddMeasurements", new StringContent(JsonConvert.SerializeObject(patient.Measurements), Encoding.UTF8, "application/json"));
+            }
         }
 
         public void DeletePatient(int ssn)
