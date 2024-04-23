@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//add services to scope
 builder.Services.AddScoped<IMeasurmentRepo, MeasurmentRepo>();
 
 //AutoMapper
