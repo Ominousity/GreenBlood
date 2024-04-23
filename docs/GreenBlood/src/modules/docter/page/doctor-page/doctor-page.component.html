@@ -1,0 +1,24 @@
+<body>
+    <div>
+        <mat-toolbar>
+            <button mat-icon-button routerLink=" ">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <span>Only Docters</span>
+        </mat-toolbar>
+    
+        <mat-tab-group>
+            <mat-tab label="See measurements">
+    
+                <app-list-measurements></app-list-measurements>
+    
+            </mat-tab>
+            <mat-tab label="Take measurement">
+    
+                <app-take-measurement [isPatient]="false"></app-take-measurement>
+    
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</body>
+
