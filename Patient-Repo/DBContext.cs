@@ -20,7 +20,7 @@ namespace Patient_Repo
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //TODO move connection string to appsettings.json
-            optionsBuilder.UseSqlServer("Server=localhost;Database=patientData;User ID=API;Password=SuperSecret7!;TrustServerCertificate=true;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=patientdb;Username=postgres;Password=password");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

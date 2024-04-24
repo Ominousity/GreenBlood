@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace API.Migrations
+namespace Patient_Repo.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialpostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,8 +14,9 @@ namespace API.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    SSN = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SSN = table.Column<string>(type: "text", nullable: false),
+                    Mail = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

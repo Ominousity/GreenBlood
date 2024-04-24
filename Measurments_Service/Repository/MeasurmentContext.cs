@@ -15,7 +15,7 @@ namespace Measurments_Service.Repository
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //TODO move connection string to appsettings.json
-            optionsBuilder.UseSqlServer("Server=localhost;Database=measurmentData;User ID=API;Password=SuperSecret7!;TrustServerCertificate=true;");
+            optionsBuilder.UseNpgsql("Host=measurement-service;Port=5433;Database=MeasurmentDB;Username=postgres;Password=password");
         }
     }
     }

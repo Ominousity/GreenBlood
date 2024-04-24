@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Measurments_Service.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialpostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,13 +16,13 @@ namespace Measurments_Service.Migrations
                 name: "Measurments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Systolic = table.Column<int>(type: "int", nullable: false),
-                    Diastolic = table.Column<int>(type: "int", nullable: false),
-                    PatientSSN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Seen = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Systolic = table.Column<int>(type: "integer", nullable: false),
+                    Diastolic = table.Column<int>(type: "integer", nullable: false),
+                    PatientSSN = table.Column<string>(type: "text", nullable: false),
+                    Seen = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

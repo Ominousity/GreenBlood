@@ -8,6 +8,6 @@ namespace Measurments_Service.Service
 
         void AddMeasurement(Measurement measurement, string SSN);
 
-        void UpdateMeasurement(Measurement measurement);
+        void UpdateMeasurement(Measurement measurement, string SSN);
     }
 }
