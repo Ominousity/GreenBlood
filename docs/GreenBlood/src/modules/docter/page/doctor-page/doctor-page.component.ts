@@ -8,7 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TakeMeasurementComponent as TakeMeasurementComponent } from "../../../shared/components/take-measurement/take-measurement.component";
-import { ListMeasurementsComponent } from "../../../shared/list-measurements/list-measurements.component";
+import { ListMeasurementsComponent } from "../../../shared/components/list-measurements/list-measurements.component";
+import { ListPatientsComponent } from "../../../shared/components/list-patients/list-patients.component";
 
 @Component({
     selector: 'app-doctor-page',
@@ -25,7 +26,8 @@ import { ListMeasurementsComponent } from "../../../shared/list-measurements/lis
         MatTabsModule,
         MatToolbarModule,
         TakeMeasurementComponent,
-        ListMeasurementsComponent
+        ListMeasurementsComponent,
+        ListPatientsComponent
     ]
 })
 export class DoctorPageComponent {

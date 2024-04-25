@@ -8,14 +8,14 @@
         </mat-toolbar>
     
         <mat-tab-group>
-            <mat-tab label="See measurements">
+            <mat-tab label="See Patients">
     
-                <app-list-measurements></app-list-measurements>
+                <app-list-patients></app-list-patients>
     
             </mat-tab>
-            <mat-tab label="Take measurement">
+            <mat-tab label="See measurements">
     
-                <app-take-measurement [isPatient]="false"></app-take-measurement>
+                <app-list-measurements [isPatient]="false" [startingSSN]="''"></app-list-measurements>
     
             </mat-tab>
         </mat-tab-group>

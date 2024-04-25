@@ -17,11 +17,11 @@
                 <p>Please write your ssn to log in</p>
                 <div>
                     <mat-form-field>
-                        <input matInput type="number" [formControl]="ssndate" placeholder="DDMMYY">
+                        <input matInput type="text" pattern="[0-9]*" [formControl]="ssndate" placeholder="DDMMYY">
                     </mat-form-field>
                     <p>-</p>
                     <mat-form-field>
-                        <input matInput type="number" [formControl]="ssnsec" placeholder="XXXX">
+                        <input matInput type="text" pattern="[0-9]*" [formControl]="ssnsec" placeholder="XXXX">
                     </mat-form-field>
                 </div>
             </mat-card-content>
@@ -35,7 +35,7 @@
         <mat-tab-group>
             <mat-tab label="See measurements">
     
-                <app-list-measurements></app-list-measurements>
+                <app-list-measurements [isPatient]="true" [startingSSN]="fullSSN"></app-list-measurements>
     
             </mat-tab>
             <mat-tab label="Take measurement">
