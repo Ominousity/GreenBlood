@@ -60,9 +60,9 @@ MeasurmentGroup.MapPost("/AddMeasurement/{SSN}", async (IMeasurmentService measu
     return Results.Created($"/Measurment/GetMeasurements/{SSN}", measurement);
 });
 
-MeasurmentGroup.MapPut("/UpdateMeasurement", async (IMeasurmentService measurmentService, Measurement measurement) =>
+MeasurmentGroup.MapPut("/UpdateMeasurement/{SSN}", async (IMeasurmentService measurmentService, Measurement measurement, string SSN) =>
 {
-    measurmentService.UpdateMeasurement(measurement);
+    measurmentService.UpdateMeasurement(measurement, SSN);
     return Results.NoContent();
 });
 

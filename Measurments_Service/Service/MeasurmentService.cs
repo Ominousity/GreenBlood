@@ -47,12 +47,13 @@ namespace Measurments_Service.Service
             }
         }
 
-        public void UpdateMeasurement(Measurement measurement)
+        public void UpdateMeasurement(Measurement measurement , string SSN)
         {
             try
             {
                 //map the measurement to the measurement entity
                 var measurementEntity = _mapper.Map<MeasurmentBe>(measurement);
+                measurementEntity.PatientSSN = SSN;
                 //update the measurement in the database
                 _Repo.UpdateMeasurement(measurementEntity);
             }
