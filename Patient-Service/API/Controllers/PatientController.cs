@@ -17,7 +17,7 @@ public class PatientController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get/{ssn}")]
+    [Route("get")]
     public IActionResult GetPatient(string ssn)
     {
         Patient patient = _patientService.GetPatient(ssn).Result;
@@ -33,7 +33,7 @@ public class PatientController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("delete/{ssn}")]
+    [Route("delete")]
     public IActionResult DeletePatient(string ssn)
     {
         _patientService.DeletePatient(ssn);
