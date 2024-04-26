@@ -26,7 +26,7 @@ namespace Patient_Repo.Migrations
                     b.Property<string>("SSN")
                         .HasColumnType("text");
 
-                    b.Property<string>("Mail")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 

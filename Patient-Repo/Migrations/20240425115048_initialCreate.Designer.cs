@@ -11,8 +11,8 @@ using Patient_Repo;
 namespace Patient_Repo.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240424131729_initialpostgres")]
-    partial class initialpostgres
+    [Migration("20240425115048_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,7 +29,7 @@ namespace Patient_Repo.Migrations
                     b.Property<string>("SSN")
                         .HasColumnType("text");
 
-                    b.Property<string>("Mail")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 

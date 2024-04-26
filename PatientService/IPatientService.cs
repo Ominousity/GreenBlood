@@ -4,8 +4,8 @@ namespace PatientService
 {
     public interface IPatientService
     {
-        Task<Patient> GetPatient(int ssn);
+        Task<Patient> GetPatient(string ssn);
         void AddPatient(Patient patient);
-        void DeletePatient(int ssn);
+        void DeletePatient(string ssn);
     }
 }

@@ -20,7 +20,7 @@ namespace PatientService
         {
             _mapper = mapper;
             _patientRepository = patientRepository;
-            _HttpClient = new HttpClient { BaseAddress = new Uri("http://measurement-service/Measurment") };
+            _HttpClient = new HttpClient { BaseAddress = new Uri("http://measurement-service:8083/Measurment") };
         }
         public void AddPatient(Patient patient)
         {
@@ -34,19 +34,19 @@ namespace PatientService
             }
         }
 
-        public void DeletePatient(int ssn)
+        public void DeletePatient(string ssn)
         {
             _patientRepository.DeletePatient(ssn);
         }
 
-        public async Task<Patient> GetPatient(int ssn)
+        public async Task<Patient> GetPatient(string ssn)
         {
             //get patientBe and map to patient
             PatientBe patientBe = await _patientRepository.GetPatient(ssn);
             Patient patient = _mapper.Map<Patient>(patientBe);
 
             //TODO: retrive measurments for this patient from http client
-            var response = await _HttpClient.GetAsync($"/GetMeasurements/{ssn}");
+            var response = await _HttpClient.GetAsync($"/Get/{ssn}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

@@ -9,9 +9,9 @@ namespace Patient_Repo
 {
     public interface IPatientRepository
     {
-        Task<PatientBe> GetPatient(int ssn);
+        Task<PatientBe> GetPatient(string ssn);
         void AddPatient(PatientBe patient);
         void UpdatePatient(PatientBe patient);
-        void DeletePatient(int ssn);
+        void DeletePatient(string ssn);
     }
 }
