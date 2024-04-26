@@ -20,7 +20,7 @@ namespace PatientService
         {
             _mapper = mapper;
             _patientRepository = patientRepository;
-            _HttpClient = new HttpClient { BaseAddress = new Uri("http://measurement-service:8083/Measurment") };
+            _HttpClient = new HttpClient { BaseAddress = new Uri("http://measurement-service/Measurment") };
         }
         public void AddPatient(Patient patient)
         {
@@ -30,7 +30,7 @@ namespace PatientService
 
             if (patient.Measurements.Count != 0)
             {
-                var response = _HttpClient.PostAsync($"/AddMeasurements", new StringContent(JsonConvert.SerializeObject(patient.Measurements), Encoding.UTF8, "application/json"));
+                _HttpClient.PostAsync($"/AddMeasurements", new StringContent(JsonConvert.SerializeObject(patient.Measurements), Encoding.UTF8, "application/json"));
             }
         }
 

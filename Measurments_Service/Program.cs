@@ -49,18 +49,18 @@ using (var scope = app.Services.CreateScope())
 
 var MeasurmentGroup = app.MapGroup("/Measurment");
 
-MeasurmentGroup.MapGet("/Get/{SSN}", async (IMeasurmentService measurmentService, string SSN) =>
+MeasurmentGroup.MapGet("/Get", async (IMeasurmentService measurmentService, string SSN) =>
 {
     return await Task.FromResult(measurmentService.GetMeasurements(SSN));
 });
 
-MeasurmentGroup.MapPost("/Add/{SSN}", async (IMeasurmentService measurmentService, Measurement measurement, string SSN) =>
+MeasurmentGroup.MapPost("/Add", async (IMeasurmentService measurmentService, Measurement measurement, string SSN) =>
 {
     measurmentService.AddMeasurement(measurement, SSN);
-    return Results.Created($"/Measurment/Get/{SSN}", measurement);
+    return Results.Created($"/Measurment/Get?SSN={SSN}", measurement);
 });
 
-MeasurmentGroup.MapPut("/Update/{SSN}", async (IMeasurmentService measurmentService, Measurement measurement, string SSN) =>
+MeasurmentGroup.MapPut("/Update", async (IMeasurmentService measurmentService, Measurement measurement, string SSN) =>
 {
     measurmentService.UpdateMeasurement(measurement, SSN);
     return Results.NoContent();
