@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    patientAPI: "https://localhost:7178",
-    measurementAPI: "https://localhost:7227",
+    patientAPI: "http://localhost:8080/Patient/",
+    measurementAPI: "http://localhost:8082/Measurment/",
   };
   
   /*

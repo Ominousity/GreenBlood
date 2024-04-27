@@ -35,14 +35,14 @@ export class ListMeasurementsComponent implements OnInit {
     isLoading: boolean = true;
 
     measurements: Measurement[] = [];
-    itemChosen: boolean = false;
+    itemChosen: Measurement = {} as Measurement;
 
     constructor(private patientService: PatientService) {}
 
     ngOnInit(): void {
         if (this.startingSSN !== '') {
             this.patientService.getPatient(this.startingSSN).subscribe((patient) => {
-                this.measurements = patient[0].Measurements;
+                this.measurements = patient.measurements;
                 this.isLoading = false;
             });
         }
@@ -51,7 +51,7 @@ export class ListMeasurementsComponent implements OnInit {
     FindMeasurements(): void {
         this.isLoading = true;
         this.patientService.getPatient(this.patientSSNSearch.value).subscribe((patient) => {
-            this.measurements = patient[0].Measurements;
+            this.measurements = patient.measurements;
             this.isLoading = false;
         });
     }

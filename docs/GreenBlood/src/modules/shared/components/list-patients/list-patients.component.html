@@ -10,14 +10,9 @@
     </div>
     <br>
     <div id="content">
-        <div id="list">
-            <mat-button-toggle-group [vertical]="true">
-                <mat-button-toggle *ngFor="let item of patients | async" [value]="item.SSN" (click)="itemChosen = true">{{item}}</mat-button-toggle>
-            </mat-button-toggle-group>
-        </div>
         <div id="inspect">
             
-            <mat-card *ngIf="itemChosen">
+            <mat-card *ngIf="!isLoading">
                 <mat-card-content>
                     <mat-form-field appearance="fill">
                         <mat-label>Patient SSN</mat-label>
@@ -35,7 +30,7 @@
                     </mat-form-field>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-raised-button (click)="DeletePatient()">Delete patient</button>
+                    <button mat-raised-button (click)="DeletePatient(patientSSN.value)">Delete patient</button>
                 </mat-card-actions>
             </mat-card>
     

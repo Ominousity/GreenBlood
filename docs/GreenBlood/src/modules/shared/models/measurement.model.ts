@@ -1,7 +1,7 @@
 export interface Measurement{
-    Id: number;
-    Date: Date;
-    Systolic: number;
-    Diastolic: number;
-    Seen: boolean;
+    id: number;
+    date: Date;
+    systolic: number;
+    diastolic: number;
+    seen: boolean;
 }

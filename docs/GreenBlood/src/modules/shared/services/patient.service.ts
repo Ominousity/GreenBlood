@@ -14,19 +14,16 @@ export class PatientService {
   constructor(private http: HttpClient) { 
   }
 
-  getPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>('https://jsonplaceholder.typicode.com/posts');
-  }
-
-  getPatient(SSN: string): Observable<Patient[]> {
-    return this.http.get<Patient[]>('https://jsonplaceholder.typicode.com/posts/1');
+  getPatient(SSN: string): Observable<Patient> {
+    console.log(this.patientAPI + 'get');
+    return this.http.get<Patient>(this.patientAPI + 'get', { params: { SSN } });
   }
 
   addPatient(patient: Patient) {
-    return this.http.post('https://jsonplaceholder.typicode.com/posts', patient);
+    return this.http.post(this.patientAPI + 'add', patient);
   }
 
-  deletePatient() {
-    return this.http.delete('https://jsonplaceholder.typicode.com/posts/1');
+  deletePatient(SSN: string) {
+    return this.http.delete(this.patientAPI + 'delete', { params: { SSN } });
   }
 }

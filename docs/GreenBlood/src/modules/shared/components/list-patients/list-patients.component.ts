@@ -39,37 +39,56 @@ import { NewPatientDialogComponent } from '../new-patient-dialog/new-patient-dia
 export class ListPatientsComponent implements OnInit{
 
   patientSSNSearch: FormControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}')]);
-  patients: Observable<Patient[]> = new Observable<Patient[]>();
+  patient: Patient = {} as Patient;
 
   patientSSN: FormControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}')]);
   patientName: FormControl = new FormControl('', [Validators.required]);
   patientEmail: FormControl = new FormControl('', [Validators.required, Validators.email]);
 
-  itemChosen: boolean = false;
+  isLoading: boolean = true;
 
-  constructor(private patientService: PatientService, public dialog: MatDialog) {}
+  constructor(public patientService: PatientService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-      this.patients = this.patientService.getPatients();
   }
 
-  setItemChosen(): void {
-    this.itemChosen = true;
-  }
-
-  DeletePatient(): void {
-    this.patientService.deletePatient();
+  DeletePatient(SSN: string): void {
+    this.patientService.deletePatient(SSN);
   }
 
   NewPatient(): void {
 
-    this.dialog.open(NewPatientDialogComponent, {
+    const dialogRef = this.dialog.open(NewPatientDialogComponent, {
       data: {},
-      
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let patient: Patient = {
+        id: 0,
+        ssn: result.SSN,
+        email: result.Name,
+        name: result.Email,
+        measurements: []
+      }
+      this.patientService.addPatient(patient);
+    });
+
+    
   }
 
   FindPatient(): void {
-    this.patients = this.patientService.getPatient(this.patientSSNSearch.value);
+    this.isLoading = true;
+    this.patientService.getPatient(this.patientSSNSearch.value).subscribe(
+      (patient) => {
+        debugger
+        this.patient = patient;
+
+        this.patientSSN.setValue(patient.ssn);
+        this.patientName.setValue(patient.name);
+        this.patientEmail.setValue(patient.email);
+
+        this.isLoading = false;
+      }
+    );
   }
 }

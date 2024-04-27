@@ -12,11 +12,11 @@ export class MeasurementService {
 
   constructor(public http: HttpClient) { }
 
-  addMeasurement(measurement: Measurement) {
-    return this.http.post('https://jsonplaceholder.typicode.com/posts', {});
+  addMeasurement(measurement: Measurement, SSN: string) {
+    return this.http.post(this.measurementAPI + 'Add?SSN=' + SSN, measurement);
   }
 
-  updateMeasurement() {
-    return this.http.put('https://jsonplaceholder.typicode.com/posts/1', {});
+  updateMeasurement(measurement: Measurement, SSN: string) {
+    return this.http.put(this.measurementAPI + 'Update?SSN=' + SSN, measurement);
   }
 }

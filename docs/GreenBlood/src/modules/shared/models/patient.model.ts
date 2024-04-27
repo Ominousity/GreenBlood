@@ -1,8 +1,9 @@
 import { Measurement } from "./measurement.model";
 
 export interface Patient{
-    SSN: string;
-    Mail: string;
-    Name: string;
-    Measurements: Measurement[];
+    id: number;
+    ssn: string;
+    email: string;
+    name: string;
+    measurements: Measurement[];
 }

@@ -18,6 +18,9 @@
                 <mat-label>Diastolic</mat-label>
                 <input matInput type="text" pattern="[0-9]*" [formControl]="diastolic" placeholder="Diastolic pressure">
             </mat-form-field>
+            <br *ngIf="isUpdating">
+            <mat-checkbox *ngIf="isUpdating" [formControl]="seen">Check me!</mat-checkbox>
+
         </mat-card-content>
         <mat-card-actions *ngIf="isPatient">
             <button mat-raised-button (click)="SendMeasurement()">Ok</button>

@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialog } from '@angular/material/dialog';
+import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PatientService } from '../../services/patient.service';
-import { Patient } from '../../models/patient.model';
 
 @Component({
   selector: 'app-new-patient-dialog',
@@ -30,23 +28,17 @@ export class NewPatientDialogComponent {
   Name: FormControl = new FormControl('', [Validators.required]);
   Email: FormControl = new FormControl('', [Validators.required, Validators.email]);
 
-  constructor(public patientService: PatientService, public dialog: MatDialog) {}
+  constructor(public dialogRef: MatDialogRef<NewPatientDialogComponent>) {}
   
-  NewPatient(): void {
-
-    let patient: Patient = {
+  Submit(): void {
+    this.dialogRef.close({
       SSN: this.SSN.value,
-      Mail: this.Name.value,
-      Name: this.Email.value,
-      Measurements: []
-    };
-
-    this.patientService.addPatient(patient);
-
-    this.Cancel();
+      Name: this.Name.value,
+      Email: this.Email.value
+    });
   }
 
   Cancel(): void {
-    this.dialog.closeAll();
+    this.dialogRef.close();
   }
 }

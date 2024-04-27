@@ -40,7 +40,6 @@ builder.Services.AddOpenTelemetry().WithTracing(builder => builder
     options.Endpoint = new Uri("http://zipkin:9411/api/v2/spans");
 }));
 
-
 // Configures the logger
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -54,6 +53,17 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,6 +74,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 //creates the database if it doesn't exist or applies any pending migrations
 using (var scope = app.Services.CreateScope())

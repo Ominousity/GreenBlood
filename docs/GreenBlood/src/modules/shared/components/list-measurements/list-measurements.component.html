@@ -10,15 +10,17 @@
     <div id="content">
         <div id="list">
             <mat-button-toggle-group [vertical]="true" *ngIf="!isLoading">
-                <mat-button-toggle *ngFor="let item of measurements" [value]="item" (click)="itemChosen = true">{{item.Date}}</mat-button-toggle>
+                <mat-button-toggle *ngFor="let item of measurements" [value]="item" (click)="itemChosen = item">{{item.date}}</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <div id="inspect">
             
-            <app-take-measurement *ngIf="itemChosen" 
+            <app-take-measurement *ngIf="itemChosen !== undefined" 
                 [isPatient]="isPatient"
                 [isUpdating]="false"
                 [isViewing]="true"
+                [measurement]="itemChosen"
+                [SSN]="patientSSNSearch.value"
             ></app-take-measurement>
     
         </div>
