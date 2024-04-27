@@ -6,6 +6,12 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
+# Set the ARG to a default value in case it's not provided during the build
+ARG DB_MEASUREMENT_CONNECTION_STRING="Host=Measurement-db;Port=5432;Database=Measurementdb;Username=postgres;Password=password"
+
+# Use the ARG value in your application
+ENV DB_MEASUREMENT_CONNECTION_STRING=$DB_MEASUREMENT_CONNECTION_STRING
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
