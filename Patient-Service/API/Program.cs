@@ -26,6 +26,7 @@ builder.Services.AddSingleton(mapperConfig.CreateMapper());
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
 builder.Services.AddDbContext<DBContext>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 

@@ -16,11 +16,12 @@ namespace PatientService
         IMapper _mapper;
         IPatientRepository _patientRepository;
         HttpClient _HttpClient;
-        public PatientService(IMapper mapper, IPatientRepository patientRepository)
+        public PatientService(IMapper mapper, IPatientRepository patientRepository, HttpClient httpClient)
         {
             _mapper = mapper;
             _patientRepository = patientRepository;
-            _HttpClient = new HttpClient { BaseAddress = new Uri("http://measurement-service:8080") };
+            _HttpClient = httpClient;
+            _HttpClient.BaseAddress = new Uri("http://measurement-service:8080");
         }
         public void AddPatient(Patient patient)
         {
