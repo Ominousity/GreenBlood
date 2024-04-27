@@ -8,3 +8,7 @@ Accept: application/json
 POST {{Measurments_Service_HostAddress}}/Measurment/AddMeasurement/{SSN}
 
 ###
+
+POST {{Measurments_Service_HostAddress}}/Measurment/Add
+
+###
