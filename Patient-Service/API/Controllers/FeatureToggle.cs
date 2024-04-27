@@ -1,4 +1,5 @@
 ﻿using FeatureHubSDK;
+using IO.FeatureHub.SSE.Model;
 
 namespace API.Controllers
 { 
@@ -33,6 +34,21 @@ namespace API.Controllers
             if (fh["GetPatient"].IsEnabled)
             {
                 return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> IsFromDenmark(string Country)
+        {
+            StrategyAttributeCountryName SACM;
+            var couldParse = Enum.TryParse(Country, true, out SACM);
+            if (couldParse)
+            {
+                var fh = await _config.NewContext().Country(SACM).Build();
+                if (fh["DanishAccess"].IsEnabled)
+                {
+                    return true;
+                }
             }
             return false;
         }
