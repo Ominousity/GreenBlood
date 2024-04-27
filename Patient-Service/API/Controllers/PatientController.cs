@@ -2,8 +2,12 @@
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using FeatureHubSDK;
+using API.Controllers;
+
 
 namespace API;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -11,16 +15,27 @@ public class PatientController : ControllerBase
 {
 
     private readonly IPatientService _patientService;
+    private readonly IFeatureToggle _featureToggle;
 
-    public PatientController(IPatientService patientService)
+
+    public PatientController(IPatientService patientService, IFeatureToggle featureToggle)
     {
         _patientService = patientService;
+        _featureToggle = featureToggle;
+
     }
 
     [HttpGet]
     [Route("get")]
-    public IActionResult GetPatient(string ssn)
+    public async Task<IActionResult> GetPatient(string ssn)
     {
+        var feature = await _featureToggle.CanDoctorGet();
+        if (!feature)
+        {
+            Log.Logger.Information("Get Patient is disabled");
+            return BadRequest("This Feature is disabled");
+        }
+
         var tracer = OpenTelemetry.Trace.TracerProvider.Default.GetTracer("API");
         using(var span = tracer.StartActiveSpan("API")) 
         {
@@ -33,7 +48,7 @@ public class PatientController : ControllerBase
 
     [HttpPost]
     [Route("add")]
-    public IActionResult AddPatient(Patient patient)
+    public  IActionResult AddPatient(Patient patient)
     {
         var tracer = OpenTelemetry.Trace.TracerProvider.Default.GetTracer("API");
         using(var span = tracer.StartActiveSpan("API")) 
@@ -47,8 +62,15 @@ public class PatientController : ControllerBase
 
     [HttpDelete]
     [Route("delete")]
-    public IActionResult DeletePatient(string ssn)
+    public async Task<IActionResult> DeletePatient(string ssn)
     {
+        var feature = await _featureToggle.CanDoctorDelete();
+        if (!feature)
+        {
+            Log.Logger.Information("Get Patient is disabled");
+            return BadRequest("This Feature is disabled");
+        }
+
         var tracer = OpenTelemetry.Trace.TracerProvider.Default.GetTracer("API");
         using(var span = tracer.StartActiveSpan("API")) 
         {

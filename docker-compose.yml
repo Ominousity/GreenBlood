@@ -1,5 +1,13 @@
 
 services:
+  featurehub:
+    image: featurehub/party-server:latest
+    restart: always
+    volumes:
+      - mssql-data:/var/opt/featurehub
+    ports:
+      - 8085:8085
+
   patient-db:
     image: 'postgres:latest'
     ports:
