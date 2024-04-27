@@ -6,6 +6,6 @@ namespace PatientService
     {
         Task<Patient> GetPatient(string ssn);
         void AddPatient(Patient patient);
-        void DeletePatient(string ssn);
+        Task DeletePatient(string ssn);
     }
 }

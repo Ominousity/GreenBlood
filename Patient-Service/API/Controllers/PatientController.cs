@@ -75,7 +75,7 @@ public class PatientController : ControllerBase
         using(var span = tracer.StartActiveSpan("API")) 
         {
         span.SetAttribute("Deleted Patient", ssn);
-        _patientService.DeletePatient(ssn);
+        await _patientService.DeletePatient(ssn);
         Log.Logger.Information($"Deleted Patient with SSN = {ssn}");
         return Ok();
         }

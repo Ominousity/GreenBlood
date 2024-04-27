@@ -34,9 +34,13 @@ namespace PatientService
             }
         }
 
-        public void DeletePatient(string ssn)
+        public async Task DeletePatient(string ssn)
         {
-            _patientRepository.DeletePatient(ssn);
+            PatientBe patientBe = await _patientRepository.GetPatient(ssn);
+            Patient patient = _mapper.Map<Patient>(patientBe);
+
+            await _HttpClient.DeleteAsync($"/Delete?SSn={ssn}");
+
         }
 
         public async Task<Patient> GetPatient(string ssn)
