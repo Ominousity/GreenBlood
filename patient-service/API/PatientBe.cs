@@ -3,7 +3,7 @@
     public class PatientBe
     {
         public string SSN { get; set; }
-        string Mail { get; set; }
+        public string Email { get; set; }
         public string Name { get; set; }
     }
 }

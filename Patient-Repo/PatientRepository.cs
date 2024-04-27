@@ -17,7 +17,7 @@ namespace Patient_Repo
         }
 
 
-        public Task<PatientBe> GetPatient(int ssn)
+        public Task<PatientBe> GetPatient(string ssn)
         {
             return Task.FromResult(_dbContext.Patients.Find(ssn));
         }
@@ -34,7 +34,7 @@ namespace Patient_Repo
             _dbContext.SaveChanges();
         }
 
-        public void DeletePatient(int ssn)
+        public void DeletePatient(string ssn)
         {
             var patient = _dbContext.Patients.Find(ssn);
             _dbContext.Patients.Remove(patient);

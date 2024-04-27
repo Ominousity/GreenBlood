@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Measurments_Service.Migrations
 {
     [DbContext(typeof(MeasurmentContext))]
-    [Migration("20240424124158_initialpostgres")]
-    partial class initialpostgres
+    [Migration("20240427104417_measurements")]
+    partial class measurements
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

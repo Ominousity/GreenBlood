@@ -1,6 +1,14 @@
-@Measurments_Service_HostAddress = http://localhost:5015
+@Measurments_Service_HostAddress = https://localhost:7102
 
 GET {{Measurments_Service_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+POST {{Measurments_Service_HostAddress}}/Measurment/AddMeasurement/{SSN}
+
+###
+
+POST {{Measurments_Service_HostAddress}}/Measurment/Add
 
 ###

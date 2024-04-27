@@ -5,7 +5,7 @@
 namespace Patient_Repo.Migrations
 {
     /// <inheritdoc />
-    public partial class initialpostgres : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Patient_Repo.Migrations
                 columns: table => new
                 {
                     SSN = table.Column<string>(type: "text", nullable: false),
-                    Mail = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
