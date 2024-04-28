@@ -4,7 +4,7 @@ on:
     - master
 
 jobs:
-  deploy:
+  Deploy-To-Private-Docker-Hub:
     runs-on: ubuntu-latest
     env:
       ECR_REPO_URL: ${{ secrets.ECR_REPO_URL }}
@@ -80,35 +80,3 @@ jobs:
 
     - name: Push Docker Doctor Web image to ECR
       run: docker push $ECR_REPO_URL/greenblod:dweb
-
-    - name: SSH into EC2 and deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: 13.38.229.22
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          aws ecr get-login-password --region eu-west-3 | sudo docker login --username AWS --password-stdin $ECR_REPO_URL/greenblod
-          sudo docker pull $ECR_REPO_URL/greenblod:measurement
-          sudo docker pull $ECR_REPO_URL/greenblod:patient
-          sudo docker pull $ECR_REPO_URL/greenblod:pweb
-          sudo docker pull $ECR_REPO_URL/greenblod:dweb
-          sudo docker stop greenblod-Measurement || true
-          sudo docker rm greenblod-Measurement || true
-          sudo docker stop greenblod-Patient || true
-          sudo docker rm greenblod-Patient || true
-          sudo docker stop greenblod-Patient-Web || true
-          sudo docker rm greenblod-Doctor-Web || true
-          sudo docker stop greenblod-Web || true
-          sudo docker rm greenblod-Web || true
-          sudo docker stop seq || true
-          sudo docker rm seq || true
-          sudo docker stop zipkin || true
-          sudo docker rm zipkin || true
-          sudo docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5342:80 -p 5341:5341 datalust/seq:latest
-          sudo docker run -d --restart unless-stopped --name zipkin -p 9411:9411 openzipkin/zipkin
-          sudo docker run -d --restart unless-stopped --name featurehub -p 8085:8085 featurehub/party-server:latest
-          sudo docker run -d --name greenblod-Measurement -p 8083:8080 $ECR_REPO_URL/greenblod:measurement
-          sudo docker run -d --name greenblod-Patient -p 8081:8080 $ECR_REPO_URL/greenblod:patient
-          sudo docker run -d --name greenblod-Patient-Web -p 8082:80 $ECR_REPO_URL/greenblod:pweb
-          sudo docker run -d --name greenblod-Doctor-Web -p 8080:80 $ECR_REPO_URL/greenblod:dweb
