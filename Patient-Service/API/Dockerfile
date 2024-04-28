@@ -25,7 +25,7 @@ COPY ["Patient-Repo/Patient-Repo.csproj", "Patient-Repo/"]
 COPY ["PatientService/PatientService.csproj", "PatientService/"]
 
 # Update the dotnet restore command to pass the connection string
-RUN dotnet restore "./Patient-Service/API/API.csproj" --runtime $DOTNET_RUNTIME --p:RestoreConfigFile=NuGet.Config --no-cache /p:DefaultConnection="${DB_PATIENT_CONNECTION_STRING}"
+RUN dotnet restore "./Patient-Service/API/API.csproj"
 
 COPY . .
 WORKDIR "/src/Patient-Service/API"

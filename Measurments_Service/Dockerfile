@@ -23,7 +23,7 @@ COPY ["Measurments_Service/Measurments_Service.csproj", "Measurments_Service/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 
 # Update the dotnet restore command to pass the connection string
-RUN dotnet restore "./Measurments_Service/Measurments_Service.csproj" --runtime $DOTNET_RUNTIME --p:RestoreConfigFile=NuGet.Config --no-cache /p:DefaultConnection="${DB_MEASUREMENT_CONNECTION_STRING}"
+RUN dotnet restore "./Measurments_Service/Measurments_Service.csproj"
 
 COPY . .
 WORKDIR "/src/Measurments_Service"
