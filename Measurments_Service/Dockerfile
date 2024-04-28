@@ -15,9 +15,16 @@ ENV DB_MEASUREMENT_CONNECTION_STRING=$DB_MEASUREMENT_CONNECTION_STRING
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Add the ARG instruction for the connection string
+ARG DB_MEASUREMENT_CONNECTION_STRING
+
 COPY ["Measurments_Service/Measurments_Service.csproj", "Measurments_Service/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
-RUN dotnet restore "./Measurments_Service/Measurments_Service.csproj"
+
+# Update the dotnet restore command to pass the connection string
+RUN dotnet restore "./Measurments_Service/Measurments_Service.csproj" --runtime $DOTNET_RUNTIME --p:RestoreConfigFile=NuGet.Config --no-cache /p:DefaultConnection="${DB_MEASUREMENT_CONNECTION_STRING}"
+
 COPY . .
 WORKDIR "/src/Measurments_Service"
 RUN dotnet build "./Measurments_Service.csproj" -c $BUILD_CONFIGURATION -o /app/build
