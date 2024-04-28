@@ -23,7 +23,7 @@ builder.Services.AddDbContext<MeasurmentContext>(options =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_MEASUREMENT_CONNECTION_STRING"));
 });
 
-
+Console.WriteLine(Environment.GetEnvironmentVariable("DB_MEASUREMENT_CONNECTION_STRING"));
 //AutoMapper
 var mapperConfig = new MapperConfiguration(mc =>
 {
