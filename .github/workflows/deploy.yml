@@ -88,6 +88,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
+          aws ecr get-login-password --region eu-west-3 | sudo docker login --username AWS --password-stdin $ECR_REPO_URL
           sudo docker pull $ECR_REPO_URL/greenblod:measurement
           sudo docker pull $ECR_REPO_URL/greenblod:patient
           sudo docker pull $ECR_REPO_URL/greenblod:pweb
