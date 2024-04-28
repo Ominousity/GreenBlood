@@ -15,6 +15,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Clear Docker build cache
+      run: docker system prune -f
+
     - name: Build Docker image For Measurement
       run: |
         docker build -t amazonec2measurement \
