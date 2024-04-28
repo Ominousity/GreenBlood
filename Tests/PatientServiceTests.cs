@@ -21,7 +21,7 @@ public class UnitTest1
         _patientRepository = Substitute.For<IPatientRepository>();
         _httpClient = Substitute.For<HttpClient>(new HttpClientHandler());
 
-        _patientService = new PatientService.PatientService(_mapper, _patientRepository, _httpClient);
+        _patientService = new PatientService.PatientService(_mapper, _patientRepository);
     }
 
     [Fact]

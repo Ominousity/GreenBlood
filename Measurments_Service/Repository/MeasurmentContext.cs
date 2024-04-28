@@ -11,5 +11,11 @@ namespace Measurments_Service.Repository
         public MeasurmentContext()
         {
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //TODO move connection string to appsettings.json
+            optionsBuilder.UseNpgsql("Host=Measurement-db;Port=5433;Database=Measurementdb;Username=postgres;Password=password");
+        }
     }
 }
