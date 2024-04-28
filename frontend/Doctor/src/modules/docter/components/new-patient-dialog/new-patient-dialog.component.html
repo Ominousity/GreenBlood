@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Enter stuff below</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Patient SSN</mat-label>
+    <input matInput type="text" pattern="[0-9]*" [formControl]="SSN" placeholder="SSN">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Patient Name</mat-label>
+    <input matInput type="text" pattern="" [formControl]="Name" placeholder="Name">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Patient Mail</mat-label>
+    <input matInput type="text" pattern="" [formControl]="Email" placeholder="Email">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="Cancel()">Cancel</button>
+  <button mat-button (click)="Submit()">Ok</button>
+</mat-dialog-actions>

@@ -40,6 +40,8 @@ namespace Measurments_Service.Repository
         {
             try
             {
+                _dbContext.Measurments.Update(measurement);
+                _dbContext.SaveChanges();
             }
             catch (Exception e)
             {

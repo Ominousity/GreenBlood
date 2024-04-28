@@ -69,5 +69,27 @@ services:
       - patient-service
       - measurement-service
       - seq         
+
+  doctor-ui:
+    build:
+      context: .
+      dockerfile: frontend/doctor/Dockerfile
+    ports:
+      - "8081:80"
+    depends_on:
+      - patient-service
+      - measurement-service
+
+  patient-ui:
+    build:
+      context: .
+      dockerfile: frontend/patient/Dockerfile
+    ports:
+      - "8083:80"
+    depends_on:
+      - patient-service
+      - measurement-service
+
+    
 volumes:
   mssql-data:
