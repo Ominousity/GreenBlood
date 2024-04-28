@@ -1,0 +1,95 @@
+services:
+  featurehub:
+    image: featurehub/party-server:latest
+    restart: always
+    volumes:
+      - mssql-data:/var/opt/featurehub
+    ports:
+      - 8085:8085
+
+  patient-db:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "patientdb"
+    volumes:
+      - mssql-data:/var/opt/patientdb
+
+  Measurement-db:
+    image: 'postgres:latest'
+    expose:
+      - "5433"
+    ports:
+      - 5433:5433
+    command: -p 5433
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "measurementdb"
+    volumes:
+      - mssql-data:/var/opt/measurementdb      
+
+  patient-service:
+    build:
+      context: .
+      dockerfile: Patient-Service\API\Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - patient-db   
+
+  measurement-service:
+    build:
+      context: .
+      dockerfile: Measurments_Service\Dockerfile
+    ports:
+      - "8082:8080"
+    depends_on:
+      - Measurement-db 
+
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - "5342:80"
+      - "5341:5341"
+    volumes:
+      - /path/to/seq-data:/data
+    environment:
+      ACCEPT_EULA: "Y"
+    restart: unless-stopped   
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    depends_on:
+      - patient-service
+      - measurement-service
+      - seq         
+
+  doctor-ui:
+    build:
+      context: .
+      dockerfile: frontend/doctor/Dockerfile
+    ports:
+      - "8081:80"
+    depends_on:
+      - patient-service
+      - measurement-service
+
+  patient-ui:
+    build:
+      context: .
+      dockerfile: frontend/patient/Dockerfile
+    ports:
+      - "8083:80"
+    depends_on:
+      - patient-service
+      - measurement-service
+
+    
+volumes:
+  mssql-data:
