@@ -1,5 +1,7 @@
+using API.Controllers;
 using AutoMapper;
 using Domain;
+using FeatureHubSDK;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -8,6 +10,7 @@ using PatientService;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,10 +28,15 @@ builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
+
+builder.Services.AddScoped<IFeatureToggle,  FeatureToggle>();
+builder.Services.AddDbContext<DBContext>();
+
 builder.Services.AddDbContext<DBContext>(options =>
 {
     options.UseNpgsql(Environment.GetEnvironmentVariable("DB_PATIENT_CONNECTION_STRING"));
 });
+
 
 builder.Services.AddControllers();
 
