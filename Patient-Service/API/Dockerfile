@@ -16,7 +16,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Patient-Service/API/API.csproj", "Patient-Service/API/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["${PWD}/Domain/Domain.csproj", "Domain/"]
 COPY ["Patient-Repo/Patient-Repo.csproj", "Patient-Repo/"]
 COPY ["PatientService/PatientService.csproj", "PatientService/"]
 RUN dotnet restore "./Patient-Service/API/API.csproj"
