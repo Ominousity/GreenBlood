@@ -1,4 +1,3 @@
-
 services:
   patient-db:
     image: 'postgres:latest'
@@ -13,8 +12,11 @@ services:
 
   Measurement-db:
     image: 'postgres:latest'
+    expose:
+      - "5433"
     ports:
-      - 5433:5432
+      - 5433:5433
+    command: -p 5433
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "password"
@@ -71,5 +73,3 @@ services:
       - measurement-service
 volumes:
   mssql-data:
-
-

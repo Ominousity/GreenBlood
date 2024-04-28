@@ -12,3 +12,7 @@ POST {{Measurments_Service_HostAddress}}/Measurment/AddMeasurement/{SSN}
 POST {{Measurments_Service_HostAddress}}/Measurment/Add
 
 ###
+
+GET {{Measurments_Service_HostAddress}}/Measurment/Get
+
+###

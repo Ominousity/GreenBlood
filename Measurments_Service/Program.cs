@@ -18,9 +18,12 @@ builder.Services.AddSwaggerGen();
 //add services to scope
 builder.Services.AddScoped<IMeasurmentRepo, MeasurmentRepo>();
 builder.Services.AddScoped<IMeasurmentService, MeasurmentService>();
-builder.Services.AddDbContext<MeasurmentContext>();
+builder.Services.AddDbContext<MeasurmentContext>(options =>
+{
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_MEASUREMENT_CONNECTION_STRING"));
+});
 
-
+Console.WriteLine(Environment.GetEnvironmentVariable("DB_MEASUREMENT_CONNECTION_STRING"));
 //AutoMapper
 var mapperConfig = new MapperConfiguration(mc =>
 {
