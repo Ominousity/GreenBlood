@@ -12,9 +12,9 @@ namespace Patient_Repo
     public class DBContext : DbContext
     {
         public DbSet<PatientBe> Patients { get; set; }
+
         public DBContext()
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
