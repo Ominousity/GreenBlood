@@ -15,11 +15,18 @@ ENV DB_PATIENT_CONNECTION_STRING=$DB_PATIENT_CONNECTION_STRING
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Add the ARG instruction for the connection string
+ARG DB_PATIENT_CONNECTION_STRING
+
 COPY ["Patient-Service/API/API.csproj", "Patient-Service/API/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Patient-Repo/Patient-Repo.csproj", "Patient-Repo/"]
 COPY ["PatientService/PatientService.csproj", "PatientService/"]
-RUN dotnet restore "./Patient-Service/API/API.csproj"
+
+# Update the dotnet restore command to pass the connection string
+RUN dotnet restore "./Patient-Service/API/API.csproj" --runtime $DOTNET_RUNTIME --p:RestoreConfigFile=NuGet.Config --no-cache /p:DefaultConnection="${DB_PATIENT_CONNECTION_STRING}"
+
 COPY . .
 WORKDIR "/src/Patient-Service/API"
 RUN dotnet build "./API.csproj" -c $BUILD_CONFIGURATION -o /app/build
