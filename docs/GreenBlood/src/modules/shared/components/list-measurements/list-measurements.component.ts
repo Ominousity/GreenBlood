@@ -1,8 +1,7 @@
-import { Observable, finalize } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
+import { Measurement } from './../../models/measurement.model';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TakeMeasurementComponent } from "../take-measurement/take-measurement.component";
-import { Measurement } from '../../models/measurement.model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { HttpClientModule } from '@angular/common/http';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -35,7 +34,8 @@ export class ListMeasurementsComponent implements OnInit {
     isLoading: boolean = true;
 
     measurements: Measurement[] = [];
-    itemChosen: Measurement | undefined;
+    item: Measurement | undefined
+    itemChosen: boolean = false;
 
     constructor(private patientService: PatientService) {}
 
@@ -46,6 +46,16 @@ export class ListMeasurementsComponent implements OnInit {
                 this.isLoading = false;
             });
         }
+    }
+
+    ChooseItem(measurement: Measurement): void {
+        this.itemChosen = false;
+        this.item = measurement;
+
+        setTimeout(() => {
+            this.itemChosen = true;
+        }, 1 );
+        
     }
 
     FindMeasurements(): void {

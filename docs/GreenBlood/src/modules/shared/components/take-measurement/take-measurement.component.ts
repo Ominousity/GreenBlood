@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -51,6 +51,7 @@ export class TakeMeasurementComponent implements OnInit{
 
   ngOnInit(): void {
     if (this.isUpdating) {
+      this.patientSSN.setValue(this.SSN);
       this.systolic.setValue(this.measurement?.systolic);
       this.diastolic.setValue(this.measurement?.diastolic);
       this.seen.setValue(this.measurement?.seen);
@@ -61,10 +62,10 @@ export class TakeMeasurementComponent implements OnInit{
     if (this.isUpdating) {
       
       let measurement: Measurement = {
-        id: 0,
+        id: this.measurement?.id ?? 0,
         date: this.measurement?.date ?? new Date(),
-        systolic: this.systolic.value,
-        diastolic: this.diastolic.value,
+        systolic: Number(this.systolic.value),
+        diastolic: Number(this.diastolic.value),
         seen: this.seen.value,
       };
   

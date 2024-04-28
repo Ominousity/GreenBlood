@@ -22,7 +22,7 @@
             <mat-checkbox *ngIf="isUpdating" [formControl]="seen">Check me!</mat-checkbox>
 
         </mat-card-content>
-        <mat-card-actions *ngIf="isPatient">
+        <mat-card-actions *ngIf="!isPatient">
             <button mat-raised-button (click)="SendMeasurement()">Ok</button>
         </mat-card-actions>
     </mat-card>    
