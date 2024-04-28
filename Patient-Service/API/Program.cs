@@ -28,8 +28,15 @@ builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
+
 builder.Services.AddScoped<IFeatureToggle,  FeatureToggle>();
 builder.Services.AddDbContext<DBContext>();
+
+builder.Services.AddDbContext<DBContext>(options =>
+{
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_PATIENT_CONNECTION_STRING"));
+});
+
 
 builder.Services.AddControllers();
 

@@ -30,7 +30,7 @@ namespace PatientService
 
             if (patient.Measurements.Count != 0)
             {
-                _HttpClient.PostAsync($"/Measurment/Add", new StringContent(JsonConvert.SerializeObject(patient.Measurements), Encoding.UTF8, "application/json"));
+                _HttpClient.PostAsync($"/Measurment/Add?SSN={patient.Ssn}", new StringContent(JsonConvert.SerializeObject(patient.Measurements), Encoding.UTF8, "application/json"));
             }
         }
 
@@ -50,7 +50,7 @@ namespace PatientService
             Patient patient = _mapper.Map<Patient>(patientBe);
 
             //TODO: retrive measurments for this patient from http client
-            var response = await _HttpClient.GetAsync($"/Get?SSn={ssn}");
+            var response = await _HttpClient.GetAsync($"/Measurment/Get?SSn={ssn}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

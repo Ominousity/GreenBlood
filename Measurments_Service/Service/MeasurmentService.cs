@@ -4,6 +4,7 @@ using Measurments_Service.Be;
 using Measurments_Service.Repository;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace Measurments_Service.Service
 {
@@ -77,7 +78,8 @@ namespace Measurments_Service.Service
         {
             //get the patient from the patient service, that takes SSN as a parameter
             var result = _HttpClient.GetAsync($"/patient/get?ssn={SSN}").Result;
-            //unwrap the result
+            Log.Logger.Debug($"Validating SSN {SSN}");
+            Log.Logger.Debug($"Response from patient service {result}");
             var content = result.Content.ReadAsStringAsync().Result;
             //check if the patient exists
             if (!content.IsNullOrEmpty())

@@ -14,6 +14,7 @@ namespace Measurments_Service.Repository
         {
             try
             {
+                measurement.Date = DateTime.UtcNow;
                 _dbContext.Measurments.Add(measurement);
                 _dbContext.SaveChanges();
             }
