@@ -1,0 +1,26 @@
+<body>
+    <div id="search" *ngIf="!isPatient">
+        <div>
+            <mat-form-field>
+                <input matInput type="text" pattern="[0-9]*" [formControl]="patientSSNSearch" placeholder="Patient SSN">
+            </mat-form-field>
+            <button mat-raised-button (click)="FindMeasurements()">Search</button>
+        </div>
+    </div>
+    <div id="content">
+        <div id="list">
+            <mat-button-toggle-group [vertical]="true" *ngIf="!isLoading">
+                <mat-button-toggle *ngFor="let item of measurements" [value]="item" (click)="itemChosen = true">{{item.Date}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div id="inspect">
+            
+            <app-take-measurement *ngIf="itemChosen" 
+                [isPatient]="isPatient"
+                [isUpdating]="false"
+                [isViewing]="true"
+            ></app-take-measurement>
+    
+        </div>
+    </div>
+</body>
