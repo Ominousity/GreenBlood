@@ -30,7 +30,6 @@ builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService.PatientService>();
 
 builder.Services.AddScoped<IFeatureToggle,  FeatureToggle>();
-builder.Services.AddDbContext<DBContext>();
 
 builder.Services.AddDbContext<DBContext>(options =>
 {
