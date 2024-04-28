@@ -17,52 +17,52 @@ jobs:
 
     - name: Build Docker image For Measurement
       run: |
-        docker build -t amazonEC2Measurement \
+        docker build -t amazonec2measurement \
           --build-arg DB_MEASUREMENT_CONNECTION_STRING="${DB_MEASUREMENT_CONNECTION_STRING}" \
           ./Measurments_Service/Dockerfile
     
     - name: Build Docker image For Patient
       run: |
-        docker build -t amazonEC2Patient \
+        docker build -t amazonec2patient \
           --build-arg DB_PATIENT_CONNECTION_STRING="${DB_PATIENT_CONNECTION_STRING}" \
           ./Patient-Service/API/Dockerfile
 
     - name: Build Docker image For Doctor Web
       run: |
-        docker build -t amazonEC2DoctorWeb \
+        docker build -t amazonec2doctorweb \
           ./frontend/Doctor/Dockerfile
 
     - name: Build Docker image For Patient Web
       run: |
-        docker build -t amazonEC2PatientWeb \
+        docker build -t amazonec2patientweb \
           ./frontend/Patient/Dockerfile
 
     - name: Login to AWS ECR
       run: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $ECR_REPO_URL
 
     - name: Tag Docker image Measurement
-      run: docker tag amazonEC2Measurement:latest $ECR_REPO_URL/greenblodMeasurement:latest
+      run: docker tag amazonec2measurement:latest $ECR_REPO_URL/greenblodmeasurement:latest
 
     - name: Tag Docker image Patient
-      run: docker tag amazonEC2Patient:latest $ECR_REPO_URL/greenblodPatient:latest
+      run: docker tag amazonec2patient:latest $ECR_REPO_URL/greenblodpatient:latest
 
     - name: Tag Docker image Patient Web
-      run: docker tag amazonEC2PatientWeb:latest $ECR_REPO_URL/greenblodPatientWeb:latest
+      run: docker tag amazonec2patientweb:latest $ECR_REPO_URL/greenblodpatientweb:latest
 
     - name: Tag Docker image Doctor Web
-      run: docker tag amazonEC2DoctorWeb:latest $ECR_REPO_URL/greenblodDoctorWeb:latest
+      run: docker tag amazonec2doctorweb:latest $ECR_REPO_URL/greenbloddoctorweb:latest
 
     - name: Push Docker Measurement image to ECR
-      run: docker push $ECR_REPO_URL/greenblodMeasurement:latest
+      run: docker push $ECR_REPO_URL/greenblodmeasurement:latest
 
     - name: Push Docker Patient image to ECR
-      run: docker push $ECR_REPO_URL/greenblodPatient:latest
+      run: docker push $ECR_REPO_URL/greenblodpatient:latest
 
     - name: Push Docker Patient Web image to ECR
-      run: docker push $ECR_REPO_URL/greenblodPatientWeb:latest
+      run: docker push $ECR_REPO_URL/greenblodpatientweb:latest
 
     - name: Push Docker Doctor Web image to ECR
-      run: docker push $ECR_REPO_URL/greenblodDoctorWeb:latest
+      run: docker push $ECR_REPO_URL/greenbloddoctorweb:latest
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
@@ -71,10 +71,10 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker pull $ECR_REPO_URL/greenblodMeasurement:latest
-          docker pull $ECR_REPO_URL/greenblodPatient:latest
-          docker pull $ECR_REPO_URL/greenblodPatientWeb:latest
-          docker pull $ECR_REPO_URL/greenblodDoctorWeb:latest
+          docker pull $ECR_REPO_URL/greenblodmeasurement:latest
+          docker pull $ECR_REPO_URL/greenblodpatient:latest
+          docker pull $ECR_REPO_URL/greenblodpatientweb:latest
+          docker pull $ECR_REPO_URL/greenbloddoctorweb:latest
           docker stop greenblod-Measurement || true
           docker rm greenblod-Measurement || true
           docker stop greenblod-Patient || true
@@ -87,7 +87,7 @@ jobs:
           docker stop zipkin || true
           docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5342:80 -p 5341:5341 datalust/seq:latest
           docker run -d --restart unless-stopped --name zipkin -p 9411:9411 openzipkin/zipkin
-          docker run -d --name greenblod-Measurement -p 8083:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblodMeasurement:latest
-          docker run -d --name greenblod-Patient -p 8081:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblodPatient:latest
-          docker run -d --name greenblod-Patient-Web -p 8082:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenblodPatientWeb:latest
-          docker run -d --name greenblod-Doctor-Web -p 8080:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenblodDoctorWeb:latest
+          docker run -d --name greenblod-Measurement -p 8083:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblodmeasurement:latest
+          docker run -d --name greenblod-Patient -p 8081:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblodpatient:latest
+          docker run -d --name greenblod-Patient-Web -p 8082:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenblodpatientweb:latest
+          docker run -d --name greenblod-Doctor-Web -p 8080:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenbloddoctorweb:latest
