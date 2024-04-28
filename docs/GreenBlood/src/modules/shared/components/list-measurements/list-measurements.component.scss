@@ -1,0 +1,53 @@
+#list{
+    width: 40%;
+    flex: 1;
+    margin: 0% 5%;
+
+    mat-button-toggle-group{
+        width: 100%;
+        margin: auto;
+
+        mat-button-toggle{
+
+            .mat-button-label-content{
+                text-align: left !important;
+            }
+        }
+    }
+}
+
+#inspect{
+    width: 40%;
+    flex: 1;
+    margin: 0% 5%;
+}
+
+#content{
+    display: flex;
+}
+
+#search{
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+    display: flex;
+
+    div{
+        position: relative;
+        width: 50%;
+        height: 50%;
+        margin: auto;
+
+        mat-form-field{
+            width: auto;
+        }
+
+        button{
+            margin-left: 10px;
+            background-color: var(--primary-300);
+            color: var(--text-800);
+            border-radius: 10px;
+        }
+    }
+    
+}
