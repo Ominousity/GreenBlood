@@ -11,6 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TakeMeasurementComponent as TakeMeasurementComponent } from '../../../shared/components/take-measurement/take-measurement.component';
 import { ListMeasurementsComponent } from '../../../shared/components/list-measurements/list-measurements.component';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PatientService } from '../../../shared/services/patient.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-patient-page',
@@ -31,6 +33,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterLink
   ],
 })
 export class PatientPageComponent {
@@ -39,16 +42,59 @@ export class PatientPageComponent {
   ssnsec = new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}')]);
   fullSSN: string = '';
 
+  lat: number = 0;
+  lng: number = 0;
+
+  approved: boolean = false;
+
+  constructor(public patientService: PatientService) { }
+
+  ngOnInit(): void {
+    this.getLocation();
+    
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        if (position) {
+          this.lat = position.coords.latitude;
+          this.lng = position.coords.longitude;
+          console.log(this.lat);
+          console.log(this.lat);
+        }
+
+        //if position is within denmark set approved to true
+        if (this.lat > 54.5 && this.lat < 57.5 && this.lng > 8 && this.lng < 15) {
+          this.approved = true;
+        } else {
+          alert("You are not in Denmark");
+        }
+
+      },
+        (error) => 
+          alert("You refused to let me know where you are! >:(")
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
   LogIn() {
 
     this.fullSSN = this.ssndate.value! + this.ssnsec.value!;
 
-    if (this.ssndate.valid && this.ssnsec.valid && this.fullSSN.length == 10 && !isNaN(Number(this.fullSSN))) {
-      this.loggedIn = true;
-
-    }else{
-      alert('Please enter a valid SSN');
-      
-    }
+    this.patientService.getPatient(this.fullSSN).subscribe(
+      (data) => {
+        if (data) {
+          this.loggedIn = true;
+        } else {
+          alert('Patient not found');
+        }
+      },
+      (error) => {
+        alert('Patient not found');
+      }
+    );
   }
 }

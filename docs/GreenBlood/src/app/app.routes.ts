@@ -5,7 +5,8 @@ import { HomePageComponent } from '../modules/home/pages/home-page/home-page.com
 
 export const routes: Routes = [
     
-    { path: '', component: HomePageComponent, pathMatch: 'full' },
+    { path: 'home', component: HomePageComponent },
     { path: 'doctor', component: DoctorPageComponent },
     { path: 'patient', component: PatientPageComponent },
+    { path: '**', redirectTo: '/home' },
 ];

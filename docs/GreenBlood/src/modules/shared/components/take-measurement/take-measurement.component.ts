@@ -68,7 +68,12 @@ export class TakeMeasurementComponent implements OnInit{
         seen: this.seen.value,
       };
   
-      this.measurementService.updateMeasurement(measurement, this.SSN)
+  
+      this.measurementService.updateMeasurement(measurement, this.SSN).subscribe(
+        (data) => {
+          alert('Measurement updated');
+        }
+      );
     }else {
 
       let measurement: Measurement = {
@@ -78,8 +83,17 @@ export class TakeMeasurementComponent implements OnInit{
         diastolic: this.diastolic.value,
         seen: false,
       };
-  
-      this.measurementService.addMeasurement(measurement, this.SSN)
+      if (measurement.systolic > 0 && measurement.diastolic > 0) {
+        this.measurementService.addMeasurement(measurement, this.SSN).subscribe(
+          (data) => {
+            alert('Measurement added');
+            this.systolic.setValue(0);
+            this.diastolic.setValue(0);
+          }
+        )
+      }else {
+        alert('Please enter a valid measurement');
+      }
     }
   }
 }

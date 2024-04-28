@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TakeMeasurementComponent as TakeMeasurementComponent } from "../../../shared/components/take-measurement/take-measurement.component";
 import { ListMeasurementsComponent } from "../../../shared/components/list-measurements/list-measurements.component";
 import { ListPatientsComponent } from "../../../shared/components/list-patients/list-patients.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-doctor-page',
@@ -27,7 +28,8 @@ import { ListPatientsComponent } from "../../../shared/components/list-patients/
         MatToolbarModule,
         TakeMeasurementComponent,
         ListMeasurementsComponent,
-        ListPatientsComponent
+        ListPatientsComponent,
+        RouterLink
     ]
 })
 export class DoctorPageComponent {

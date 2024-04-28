@@ -1,5 +1,4 @@
 import { PatientService } from './../../services/patient.service';
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TakeMeasurementComponent } from "../take-measurement/take-measurement.component";
@@ -53,7 +52,11 @@ export class ListPatientsComponent implements OnInit{
   }
 
   DeletePatient(SSN: string): void {
-    this.patientService.deletePatient(SSN);
+    this.patientService.deletePatient(SSN).subscribe(
+      (data) => {
+        alert('Patient deleted');
+      }
+    )
   }
 
   NewPatient(): void {
@@ -70,7 +73,16 @@ export class ListPatientsComponent implements OnInit{
         name: result.Email,
         measurements: []
       }
-      this.patientService.addPatient(patient);
+      console.log(patient);
+      this.patientService.addPatient(patient).subscribe(
+        (data) => {
+          alert('Patient added');
+        },
+        (error) => {
+          alert('Patient not added');
+        }
+      );
+      
     });
 
     
@@ -80,7 +92,6 @@ export class ListPatientsComponent implements OnInit{
     this.isLoading = true;
     this.patientService.getPatient(this.patientSSNSearch.value).subscribe(
       (patient) => {
-        debugger
         this.patient = patient;
 
         this.patientSSN.setValue(patient.ssn);

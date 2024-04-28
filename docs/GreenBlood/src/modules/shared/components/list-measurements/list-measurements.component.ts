@@ -35,7 +35,7 @@ export class ListMeasurementsComponent implements OnInit {
     isLoading: boolean = true;
 
     measurements: Measurement[] = [];
-    itemChosen: Measurement = {} as Measurement;
+    itemChosen: Measurement | undefined;
 
     constructor(private patientService: PatientService) {}
 
