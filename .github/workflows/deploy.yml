@@ -21,24 +21,31 @@ jobs:
     - name: Build Docker image For Measurement
       run: |
         docker build -t amazonec2measurement \
-          --build-arg DB_MEASUREMENT_CONNECTION_STRING="${DB_MEASUREMENT_CONNECTION_STRING}" \
-          Measurments_Service/ .
+        --build-arg DB_MEASUREMENT_CONNECTION_STRING="${DB_MEASUREMENT_CONNECTION_STRING}" \
+        --build-arg DOTNET_RUNTIME=linux-x64 \
+        -f Measurments_Service/Dockerfile \
+        .
+
     
     - name: Build Docker image For Patient
       run: |
         docker build -t amazonec2patient \
-          --build-arg DB_PATIENT_CONNECTION_STRING="${DB_PATIENT_CONNECTION_STRING}" \
-          Patient-Service/API/ .
+        --build-arg DB_PATIENT_CONNECTION_STRING="${DB_PATIENT_CONNECTION_STRING}" \
+        --build-arg DOTNET_RUNTIME=linux-x64 \
+        -f Patient-Service/API/Dockerfile \
+        .
 
     - name: Build Docker image For Doctor Web
       run: |
         docker build -t amazonec2doctorweb \
-          frontend/Doctor/ .
+          frontend/Doctor/ \
+          .
 
     - name: Build Docker image For Patient Web
       run: |
         docker build -t amazonec2patientweb \
-          frontend/Patient/ .
+          frontend/Patient/ \
+          .
 
     - name: Login to AWS ECR
       run: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $ECR_REPO_URL
