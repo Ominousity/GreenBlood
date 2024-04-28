@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Patient-Repo\Patient-Repo.csproj" />
   </ItemGroup>
 
