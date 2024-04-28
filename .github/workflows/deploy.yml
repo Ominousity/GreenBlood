@@ -88,23 +88,23 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker pull $ECR_REPO_URL/greenblod:measurement
-          docker pull $ECR_REPO_URL/greenblod:patient
-          docker pull $ECR_REPO_URL/greenblod:pweb
-          docker pull $ECR_REPO_URL/greenblod:dweb
-          docker stop greenblod-Measurement || true
-          docker rm greenblod-Measurement || true
-          docker stop greenblod-Patient || true
-          docker rm greenblod-Patient || true
-          docker stop greenblod-Patient-Web || true
-          docker rm greenblod-Doctor-Web || true
-          docker stop greenblod-Web || true
-          docker rm greenblod-Web || true
-          docker stop seq || true
-          docker stop zipkin || true
-          docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5342:80 -p 5341:5341 datalust/seq:latest
-          docker run -d --restart unless-stopped --name zipkin -p 9411:9411 openzipkin/zipkin
-          docker run -d --name greenblod-Measurement -p 8083:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblod:measurement
-          docker run -d --name greenblod-Patient -p 8081:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblod:patient
-          docker run -d --name greenblod-Patient-Web -p 8082:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenblod:pweb
-          docker run -d --name greenblod-Doctor-Web -p 8080:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenblod:dweb
+          sudo docker pull $ECR_REPO_URL/greenblod:measurement
+          sudo docker pull $ECR_REPO_URL/greenblod:patient
+          sudo docker pull $ECR_REPO_URL/greenblod:pweb
+          sudo docker pull $ECR_REPO_URL/greenblod:dweb
+          sudo docker stop greenblod-Measurement || true
+          sudo docker rm greenblod-Measurement || true
+          sudo docker stop greenblod-Patient || true
+          sudo docker rm greenblod-Patient || true
+          sudo docker stop greenblod-Patient-Web || true
+          sudo docker rm greenblod-Doctor-Web || true
+          sudo docker stop greenblod-Web || true
+          sudo docker rm greenblod-Web || true
+          sudo docker stop seq || true
+          sudo docker stop zipkin || true
+          sudo docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5342:80 -p 5341:5341 datalust/seq:latest
+          sudo docker run -d --restart unless-stopped --name zipkin -p 9411:9411 openzipkin/zipkin
+          sudo docker run -d --name greenblod-Measurement -p 8083:8080 $ECR_REPO_URL/greenblod:measurement
+          sudo docker run -d --name greenblod-Patient -p 8081:8080 $ECR_REPO_URL/greenblod:patient
+          sudo docker run -d --name greenblod-Patient-Web -p 8082:80 $ECR_REPO_URL/greenblod:pweb
+          sudo docker run -d --name greenblod-Doctor-Web -p 8080:80 $ECR_REPO_URL/greenblod:dweb
