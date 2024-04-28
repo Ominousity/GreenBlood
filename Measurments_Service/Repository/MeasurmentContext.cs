@@ -18,5 +18,4 @@ namespace Measurments_Service.Repository
             optionsBuilder.UseNpgsql("Host=Measurement-db;Port=5433;Database=Measurementdb;Username=postgres;Password=password");
         }
     }
-    }
 }
