@@ -1,7 +1,7 @@
 FROM node:20.1 as build
 WORKDIR /app
 COPY /frontend/Patient/package.json ./package.json
-RUN npm install
+RUN npm install --no-cache
 RUN npm install -g @angular/cli
 COPY /frontend/Patient/ ./
 RUN ng build
