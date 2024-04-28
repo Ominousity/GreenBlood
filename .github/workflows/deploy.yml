@@ -102,9 +102,12 @@ jobs:
           sudo docker stop greenblod-Web || true
           sudo docker rm greenblod-Web || true
           sudo docker stop seq || true
+          sudo docker rm seq || true
           sudo docker stop zipkin || true
+          sudo docker rm zipkin || true
           sudo docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5342:80 -p 5341:5341 datalust/seq:latest
           sudo docker run -d --restart unless-stopped --name zipkin -p 9411:9411 openzipkin/zipkin
+          sudo docker run -d --restart unless-stopped --name featurehub -p 8085:8085 featurehub/party-server:latest
           sudo docker run -d --name greenblod-Measurement -p 8083:8080 $ECR_REPO_URL/greenblod:measurement
           sudo docker run -d --name greenblod-Patient -p 8081:8080 $ECR_REPO_URL/greenblod:patient
           sudo docker run -d --name greenblod-Patient-Web -p 8082:80 $ECR_REPO_URL/greenblod:pweb
