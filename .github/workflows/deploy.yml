@@ -27,6 +27,11 @@ jobs:
           --build-arg DB_PATIENT_CONNECTION_STRING="${DB_PATIENT_CONNECTION_STRING}" \
           ./Patient-Service/API/Dockerfile
 
+    - name: Build Docker image For Web
+      run: |
+        docker build -t amazonEC2Web \
+          ./docs/GreenBlood/Dockerfile
+
     - name: Login to AWS ECR
       run: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $ECR_REPO_URL
 
@@ -36,11 +41,17 @@ jobs:
     - name: Tag Docker image Patient
       run: docker tag amazonEC2Patient:latest $ECR_REPO_URL/greenblodPatient:latest
 
+    - name: Tag Docker image Web
+      run: docker tag amazonEC2Web:latest $ECR_REPO_URL/greenblodWeb:latest
+
     - name: Push Docker Measurement image to ECR
       run: docker push $ECR_REPO_URL/greenblodMeasurement:latest
 
     - name: Push Docker Patient image to ECR
       run: docker push $ECR_REPO_URL/greenblodPatient:latest
+
+    - name: Push Docker Web image to ECR
+      run: docker push $ECR_REPO_URL/greenblodWeb:latest
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
@@ -51,13 +62,17 @@ jobs:
         script: |
           docker pull $ECR_REPO_URL/greenblodMeasurement:latest
           docker pull $ECR_REPO_URL/greenblodPatient:latest
+          docker pull $ECR_REPO_URL/greenblodWeb:latest
           docker stop greenblod-Measurement || true
           docker rm greenblod-Measurement || true
           docker stop greenblod-Patient || true
           docker rm greenblod-Patient || true
+          docker stop greenblod-Web || true
+          docker rm greenblod-Web || true
           docker stop seq || true
           docker stop zipkin || true
           docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5342:80 -p 5341:5341 datalust/seq:latest
           docker run -d --restart unless-stopped --name zipkin -p 9411:9411 openzipkin/zipkin
           docker run -d --name greenblod-Measurement -p 8083:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblodMeasurement:latest
           docker run -d --name greenblod-Patient -p 8081:8080 --depends-on seq,zipkin $ECR_REPO_URL/greenblodPatient:latest
+          docker run -d --name greenblod-Web -p 5445:80 --depends-on greenblod-Patient,greenblod-Measurement $ECR_REPO_URL/greenblodWeb:latest
