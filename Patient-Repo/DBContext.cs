@@ -13,14 +13,8 @@ namespace Patient_Repo
     {
         public DbSet<PatientBe> Patients { get; set; }
 
-        public DBContext()
+        public DBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //TODO move connection string to appsettings.json
-            optionsBuilder.UseNpgsql("Host=patient-db;Port=5432;Database=patientdb;Username=patient;Password=password");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
