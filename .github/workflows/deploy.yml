@@ -38,14 +38,12 @@ jobs:
     - name: Build Docker image For Doctor Web
       run: |
         docker build -t amazonec2doctorweb \
-          frontend/Doctor/ \
-          .
+          frontend/Doctor/
 
     - name: Build Docker image For Patient Web
       run: |
         docker build -t amazonec2patientweb \
-          frontend/Patient/ \
-          .
+          frontend/Patient/
 
     - name: Login to AWS ECR
       run: aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $ECR_REPO_URL
